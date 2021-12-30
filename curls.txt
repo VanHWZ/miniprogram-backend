@@ -1,0 +1,45 @@
+# user register
+curl -X POST http://127.0.0.1:8888/user/ -H "content-type:application/json" -d "{\"name\":\"bd2\",\"open_id\":\"bdopenid2\"}"
+
+# list user
+# all parameters can be neglected
+curl "http://127.0.0.1:8888/user?page_size=20&name=bd&open_id=bdopenid&group=4"
+
+# auth user
+curl "http://127.0.0.1:8888/auth?open_id=bdopenid"
+
+# get user
+curl "http://127.0.0.1:8888/user/5/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4"
+
+# put user
+curl -X PUT "http://127.0.0.1:8888/user/5/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4" -H "content-type:application/json" -d "{\"name\":\"bd\"}"
+
+# list group
+curl "http://127.0.0.1:8888/user/5/group?page=1&page_size=20" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4"
+
+# create group
+curl -X POST "http://127.0.0.1:8888/user/5/group/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4"
+
+# retrieve group 
+curl "http://127.0.0.1:8888/user/5/group/5/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4"
+
+# enter group
+curl -X POST "http://127.0.0.1:8888/user/5/group/2/enter/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4"
+
+# quit group
+curl -X POST "http://127.0.0.1:8888/user/5/group/2/quit/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA3ODQ5MTl9.Ujd4prDpEUdeTu0KeVtR-tPb-PSEQA0Xb_d04EBrYn4"
+
+# create event
+curl -X POST http://127.0.0.1:8888/user/1/group/1/event/ -H "content-type:application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY" -d "{\"content\":\"新年快乐\",\"event_type\":1,\"event_time\":\"2021-12-30 12:00:00\"}"
+
+# list event
+curl http://127.0.0.1:8888/user/1/group/1/event -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"
+
+# retrieve event
+curl http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"
+
+# update event
+curl -X PUT http://127.0.0.1:8888/user/1/group/1/event/5/ -H "content-type:application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY" -d "{\"content\":\"新年快乐\",\"event_type\":1,\"event_time\":\"2021-12-31 12:00:00\"}"
+
+# delete event
+ curl -X DELETE http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"

@@ -1,22 +1,21 @@
 package repository
 
-import "gorm.io/gorm"
+import (
+	"time"
+)
 
 type Group struct {
-	gorm.Model
-	Used bool `gorm:"type:bool"`
+	ID          uint      `gorm:"primarykey"`
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	Name        string    `gorm:"default:group"`
+	Users       []User    `gorm:"many2many:user_group"`
+	Events      []Event   `gorm:"foreignKey:GroupID"`
+	Messages    []Message `gorm:"foreignKey:GroupID"`
 }
 
-func NewGroupRepo() *gorm.DB {
-	return DB.Model(&Group{})
-}
-
-func NewGroup() Group {
+func NextGroup() *Group {
 	var group Group
-	result := DB.Model(&Group{}).Where("used=?", false).First(&group)
-	if result.RowsAffected == 0 {
-		group.Used = false
-		DB.Create(&group)
-	}
-	return group
+	DB.Create(&group)
+	return &group
 }

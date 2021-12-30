@@ -2,7 +2,7 @@ package representation
 
 import (
 	"github.com/gin-gonic/gin"
-	"strconv"
+	error2 "miniprogram-backend/errorcode"
 )
 
 type AppError struct {
@@ -16,9 +16,9 @@ func (e *AppError) Error() string {
 
 func (e *AppError) ErrorResponse() *gin.H {
 	// TODO: add string code map
-	codeString := strconv.Itoa(e.Code)
+	codeString := error2.CodeMap[e.Code]
 	return &gin.H{
-		"code": codeString,
+		"error_code": codeString,
 		"message": e.Message,
 	}
 }

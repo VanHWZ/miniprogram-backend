@@ -1,16 +1,15 @@
 package repository
 
-import "gorm.io/gorm"
+import (
+	"time"
+)
 
 type User struct {
-	gorm.Model
-	Name string `gorm:"type:varchar(50)"`
-	OpenID string `gorm:"type:varchar(50)"`
-	Token string `gorm:"type:varchar(120)"`
-	GroupRefer uint
-	Group Group `gorm:"foreignkey:GroupRefer"`
-}
-
-func NewUserRepo() *gorm.DB {
-	return DB.Model(&User{})
+	ID         uint      `gorm:"primarykey"`
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+	Name       string    `gorm:"type:varchar(100)"`
+	OpenID     string    `gorm:"type:varchar(50)"`
+	Token      string    `gorm:"type:varchar(120)"`
+	Groups     []Group   `gorm:"many2many:user_group"`
 }

@@ -21,7 +21,8 @@ func DatabaseInit() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		db.AutoMigrate(&User{}, &Message{}, &Event{}, &Group{})
+		//db.AutoMigrate(&AppGroup{}, &AppUser{}, &App{}, &AppStatus{})
+		db.AutoMigrate(&Group{}, &User{}, &Message{}, &Event{})
 	}
 	DB = db
 }
