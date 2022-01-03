@@ -6,13 +6,17 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
+	"miniprogram-backend/conf"
 )
 
 var DB *gorm.DB
 
-func DatabaseInit() {
-	configString := "host=localhost user=vincent password=990130 dbname=testdb port=5432 sslmode=disable TimeZone=Asia/Shanghai"
-	db, err := gorm.Open(postgres.Open(configString), &gorm.Config{
+func init() {
+	dbConf := conf.Config.Database
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=%s",
+		dbConf.Host, dbConf.User, dbConf.Password, dbConf.Dbname, dbConf.Port, dbConf.Sslmode, dbConf.TimeZone)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
@@ -21,7 +25,6 @@ func DatabaseInit() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		//db.AutoMigrate(&AppGroup{}, &AppUser{}, &App{}, &AppStatus{})
 		db.AutoMigrate(&Group{}, &User{}, &Message{}, &Event{})
 	}
 	DB = db
