@@ -42,4 +42,20 @@ curl http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOi
 curl -X PUT http://127.0.0.1:8888/user/1/group/1/event/5/ -H "content-type:application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY" -d "{\"content\":\"新年快乐\",\"event_type\":1,\"event_time\":\"2021-12-31 12:00:00\"}"
 
 # delete event
- curl -X DELETE http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"
+curl -X DELETE http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"
+
+# create message
+curl "http://127.0.0.1:8888/user/1/group/1/message/" -H "content-type: application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEyMjg0MTV9.hMHq2bko1IgUZTVX5sRF4XIxvjEWmNpaIRA-97AgsQU" -d "{\"content\":\"testcontent\"}"
+
+# list message
+curl "http://127.0.0.1:8888/user/1/group/1/message" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEyMjg0MTV9.hMHq2bko1IgUZTVX5sRF4XIxvjEWmNpaIRA-97AgsQU"
+
+# retrieve message 
+curl "http://127.0.0.1:8888/user/1/group/1/message/4/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEyMjg0MTV9.hMHq2bko1IgUZTVX5sRF4XIxvjEWmNpaIRA-97AgsQU"
+
+# update message
+curl "http://127.0.0.1:8888/user/1/group/1/message/4/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEyMjg0MTV9.hMHq2bko1IgUZTVX5sRF4XIxvjEWmNpaIRA-97AgsQU"
+
+# delete message
+curl -Liv -X DELETE "http://127.0.0.1:8888/user/1/group/1/message/7/" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEyMjg0MTV9.hMHq2bko1IgUZTVX5sRF4XIxvjEWmNpaIRA-97AgsQU"
+

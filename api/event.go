@@ -18,7 +18,6 @@ func ListEvent(context *gin.Context) {
 	if events, err := service.ListEvent(rl); err != nil {
 		appError := rep.AppError{Code: errorCode.ParamError, Message: err.Error()}
 		context.JSON(http.StatusBadRequest, appError.ErrorResponse())
-		return
 	} else {
 		context.JSON(http.StatusOK, &rep.Response{
 			Data: gin.H{
@@ -29,9 +28,9 @@ func ListEvent(context *gin.Context) {
 }
 
 func CreateEvent(context *gin.Context) {
-	var eventCreate service.EventCtn
+	var ctn service.EventCtn
 	var rl service.GroupUserRl
-	if err := context.ShouldBind(&eventCreate); err != nil {
+	if err := context.ShouldBind(&ctn); err != nil {
 		appError := rep.AppError{Code: errorCode.ParamError, Message: err.Error()}
 		context.JSON(http.StatusBadRequest, appError.ErrorResponse())
 		return
@@ -41,7 +40,7 @@ func CreateEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, appError.ErrorResponse())
 		return
 	}
-	if event, err := service.CreateEvent(&eventCreate, &rl); err == nil {
+	if event, err := service.CreateEvent(&ctn, &rl); err == nil {
 		context.JSON(http.StatusCreated, &rep.Response{
 			Data: *event,
 		})

@@ -9,8 +9,8 @@ import (
 
 type Event struct {
 	ID         uint          `json:"id"`
-	CreateAt   time.Time     `json:"create_at"`
-	UpdateAt   time.Time     `json:"update_at"`
+	CreatedAt   time.Time     `json:"create_at"`
+	UpdatedAt   time.Time     `json:"update_at"`
 	Content    string        `json:"content"`
 	EventType  int           `json:"event_type"`
 	EventTime  util.Datetime `json:"event_time"`
@@ -33,8 +33,8 @@ func init() {
 func (serializer *eventSerializer) Serialize(event *repo.Event) *Event {
 	return &Event{
 		ID: event.ID,
-		CreateAt: event.CreatedAt,
-		UpdateAt: event.UpdatedAt,
+		CreatedAt: event.CreatedAt,
+		UpdatedAt: event.UpdatedAt,
 		Content: event.Content,
 		EventType: event.EventType,
 		EventTime: util.Datetime(event.EventTime),

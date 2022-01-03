@@ -88,19 +88,19 @@ func UpdateUser(userUpdate *UserUpdate) (*repr.User, *repr.AppError) {
 
 func ListUser(userInfo *UserList, paginator *util.Paginator) (*[]repr.User, *repr.AppError) {
 	var users []repo.User
-	db := repo.DB.Model(&repo.User{}).Preload("Groups")
+	query := repo.DB.Model(&repo.User{}).Preload("Groups")
 	if userInfo.GroupID != 0 {
-		db = db.Joins("JOIN user_group on user_group.user_id = \"user\".id " +
+		query = query.Joins("JOIN user_group on user_group.user_id = \"user\".id " +
 			"JOIN \"group\" on user_group.group_id = \"group\".id " +
 			"AND \"group\".id IN (?)", userInfo.GroupID)
 	}
 	if userInfo.Name != "" {
-		db.Where("\"user\".name = ?", userInfo.Name)
+		query.Where("\"user\".name = ?", userInfo.Name)
 	}
 	if userInfo.OpenID != "" {
-		db = db.Where("\"user\".open_id = ?", userInfo.OpenID)
+		query = query.Where("\"user\".open_id = ?", userInfo.OpenID)
 	}
-	if r := db.Group("\"user\".id").
+	if r := query.Group("\"user\".id").
 			Scopes(util.Paginate(paginator)).Find(&users); r.Error != nil {
 		return nil, &repr.AppError{
 			Code: errorCode.DatabaseError,

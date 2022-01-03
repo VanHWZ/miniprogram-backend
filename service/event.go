@@ -30,12 +30,12 @@ func ListEvent(rl GroupUserRl) (*[]repr.Event, *repr.AppError) {
 	return repr.EventSerializer.SerializeEvents(&events), nil
 }
 
-func CreateEvent(eventCreate *EventCtn, rl *GroupUserRl) (*repr.Event, *repr.AppError) {
+func CreateEvent(ctn *EventCtn, rl *GroupUserRl) (*repr.Event, *repr.AppError) {
 	event := &repo.Event{
-		Content: eventCreate.Content,
-		EventType: eventCreate.EventType,
-		EventTime: time.Time(eventCreate.EventTime),
-		GroupID: rl.GroupID,
+		Content:   ctn.Content,
+		EventType: ctn.EventType,
+		EventTime: time.Time(ctn.EventTime),
+		GroupID:   rl.GroupID,
 		CreatorID: rl.UserID,
 		UpdaterID: rl.UserID,
 	}
@@ -47,22 +47,22 @@ func CreateEvent(eventCreate *EventCtn, rl *GroupUserRl) (*repr.Event, *repr.App
 
 func RetrieveEvent(rl *EventRl) (*repr.Event, *repr.AppError) {
 	var event repo.Event
-	if r := repo.DB.Debug().Preload("Creator").Preload("Updater").
+	if r := repo.DB.Preload("Creator").Preload("Updater").
 			Where("group_id=?", rl.GroupID).First(&event, rl.EventID); r.Error != nil {
 		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: r.Error.Error()}
 	}
 	return repr.EventSerializer.Serialize(&event), nil
 }
 
-func UpdateEvent(eventCtn *EventCtn, rl *EventRl) (*repr.Event, *repr.AppError) {
+func UpdateEvent(ctn *EventCtn, rl *EventRl) (*repr.Event, *repr.AppError) {
 	var event = repo.Event{ID: rl.EventID}
 	if err := repo.DB.Model(&event).Association("Updater").Replace(&repo.User{ID: rl.UserID}); err != nil {
 		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: err.Error()}
 	}
 	if r := repo.DB.Model(&event).Updates(repo.Event{
-			Content: eventCtn.Content,
-			EventType: eventCtn.EventType,
-			EventTime: time.Time(eventCtn.EventTime)}); r.Error != nil {
+			Content:   ctn.Content,
+			EventType: ctn.EventType,
+			EventTime: time.Time(ctn.EventTime)}); r.Error != nil {
 		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: r.Error.Error()}
 	}
 	return repr.EventSerializer.Serialize(&event), nil
