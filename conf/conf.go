@@ -18,6 +18,10 @@ type Configuration struct {
 		Sslmode  string  `yaml:"sslmode"`
 		TimeZone string  `yaml:"timezone"`
 	}
+	Logger struct{
+		BaseDir  string  `yaml:"basedir"`
+		HttpLog  string  `yaml:"httplog"`
+	}
 }
 
 var (
@@ -33,12 +37,12 @@ func init()  {
 	currentDir, _ := os.Getwd()
 	configFile, err := ioutil.ReadFile(filepath.Join(currentDir, confDir, confYaml))
 	if err != nil {
-		fmt.Println("Failed to read yaml config file: %v\n", err)
+		fmt.Printf("Failed to read yaml config file: %v\n\n", err)
 		return
 	}
 	err = yaml.Unmarshal(configFile, &Config)
 	if err != nil {
-		fmt.Sprintf("Failed to unmarshal yaml config file: %v\n", err)
+		fmt.Printf("Failed to unmarshal yaml config file: %v\n", err)
 		return
 	}
 

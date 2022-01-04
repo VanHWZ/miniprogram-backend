@@ -9,6 +9,8 @@ import (
 func NewRouter() *gin.Engine {
 	router := gin.New()
 
+	router.Use(middleware.HttpLogger())
+
 	// user related
 	router.GET("/test/", api.Test)
 	router.POST("/user/", api.CreateUser)

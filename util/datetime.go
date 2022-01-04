@@ -3,7 +3,6 @@ package util
 import (
 	"database/sql/driver"
 	"errors"
-	"fmt"
 	"time"
 )
 
@@ -60,7 +59,6 @@ func (dt *Datetime) UnmarshalJSON(data []byte) error {
 	var t *time.Time
 	t = new(time.Time)
 	*t, err = time.ParseInLocation(`"`+DatetimeFormat+`"`, string(data), time.Local)
-	fmt.Println(*t)
 	*dt = Datetime(*t)
 	return err
 }
