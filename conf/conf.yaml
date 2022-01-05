@@ -9,3 +9,4 @@ database:
 logger:
   basedir: "log"
   httplog: "http.log"
+  errorlog: "error.log"

@@ -21,6 +21,7 @@ type Configuration struct {
 	Logger struct{
 		BaseDir  string  `yaml:"basedir"`
 		HttpLog  string  `yaml:"httplog"`
+		ErrorLog string  `yaml:"errorlog"`
 	}
 }
 
@@ -30,12 +31,13 @@ var (
 
 const (
 	confDir  = "conf"
-	confYaml = "conf.yaml"
+	testConfYaml = "conf.yaml"
+	prodConfYaml = "conf-prod.yaml"
 )
 
 func init()  {
 	currentDir, _ := os.Getwd()
-	configFile, err := ioutil.ReadFile(filepath.Join(currentDir, confDir, confYaml))
+	configFile, err := ioutil.ReadFile(filepath.Join(currentDir, confDir, prodConfYaml))
 	if err != nil {
 		fmt.Printf("Failed to read yaml config file: %v\n\n", err)
 		return

@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	logger = logrus.New()
+	httpLogger = logrus.New()
 )
 
 func init() {
@@ -24,14 +24,14 @@ func init() {
 	if _, err := os.Stat(conf.Config.Logger.BaseDir); err != nil {
 		os.MkdirAll(conf.Config.Logger.BaseDir, os.ModePerm)
 	}
-	logger.SetOutput(&lumberjack.Logger{
+	httpLogger.SetOutput(&lumberjack.Logger{
 		Filename: path,
 		MaxSize: 1,
 		MaxBackups: 10,
 		MaxAge: 180,
 		Compress: true,
 	})
-	logger.SetFormatter(&nested.Formatter{
+	httpLogger.SetFormatter(&nested.Formatter{
 		HideKeys:    false,
 		TimestampFormat: time.RFC3339,
 		NoColors: true,
@@ -60,7 +60,7 @@ func HttpLogger() gin.HandlerFunc {
 		statusCode := c.Writer.Status()
 		repBody := blw.Body.String()
 
-		entry := logger.WithFields(logrus.Fields{
+		entry := httpLogger.WithFields(logrus.Fields{
 			"from": reqIP,
 			"method": reqMethod,
 			"uri": reqUri,
