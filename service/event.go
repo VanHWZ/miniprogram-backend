@@ -49,13 +49,16 @@ func RetrieveEvent(rl *EventRl) (*repr.Event, *repr.AppError) {
 	var event repo.Event
 	if r := repo.DB.Preload("Creator").Preload("Updater").
 			Where("group_id=?", rl.GroupID).First(&event, rl.EventID); r.Error != nil {
-		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: r.Error.Error()}
+		return nil, &repr.AppError{Code: errorcode.EventRetrieveError, Message: r.Error.Error()}
 	}
 	return repr.EventSerializer.Serialize(&event), nil
 }
 
 func UpdateEvent(ctn *EventCtn, rl *EventRl) (*repr.Event, *repr.AppError) {
 	var event = repo.Event{ID: rl.EventID}
+	if r := repo.DB.First(&event); r != nil {
+		return nil, &repr.AppError{Code: errorcode.EventUpdateError, Message: r.Error.Error()}
+	}
 	if err := repo.DB.Model(&event).Association("Updater").Replace(&repo.User{ID: rl.UserID}); err != nil {
 		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: err.Error()}
 	}

@@ -39,7 +39,7 @@ curl http://127.0.0.1:8888/user/1/group/1/event -H "Authorization: eyJhbGciOiJIU
 curl http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"
 
 # update event
-curl -X PUT http://127.0.0.1:8888/user/1/group/1/event/5/ -H "content-type:application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY" -d "{\"content\":\"新年快乐\",\"event_type\":1,\"event_time\":\"2021-12-31 12:00:00\"}"
+curl -X PUT http://127.0.0.1:8888/user/1/group/1/event/5/ -H "content-type:application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDEzMTAyNjd9.LGrWQcmP_ck50Qg5JH-OD3sQT5-EG-6uOqJMc9CTc_U" -d "{\"content\":\"新年快乐\",\"event_type\":1,\"event_time\":\"2021-12-31 12:00:00\"}"
 
 # delete event
 curl -X DELETE http://127.0.0.1:8888/user/1/group/1/event/6/ -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDA5MDA4NzR9.koJa5a-B9pXam2V0uf6CYArUM7GRJgZnl8pN_uLY9YY"

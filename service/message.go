@@ -43,13 +43,16 @@ func RetrieveMessage(rl *MessageRl) (*repr.Message, *repr.AppError) {
 	var message repo.Message
 	if r := repo.DB.Preload("Creator").Where("group_id=?", rl.GroupID).
 			First(&message, rl.MessageID); r.Error != nil {
-		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: r.Error.Error()}
+		return nil, &repr.AppError{Code: errorcode.MessageRetrieveError, Message: r.Error.Error()}
 	}
 	return repr.MessageSerializer.Serialize(&message), nil
 }
 
 func UpdateMessage(ctn *MessageCtn, rl *MessageRl) (*repr.Message, *repr.AppError) {
 	var message = repo.Message{ID: rl.MessageID}
+	if r := repo.DB.First(&message); r.Error != nil {
+		return nil, &repr.AppError{Code: errorcode.MessageUpdateError, Message: r.Error.Error()}
+	}
 	if r := repo.DB.Model(&message).Updates(repo.Message{Content: ctn.Content}); r.Error != nil {
 		return nil, &repr.AppError{Code: errorcode.DatabaseError, Message: r.Error.Error()}
 	}
@@ -65,7 +68,7 @@ func DeleteMessage(rl *MessageRl) *repr.AppError {
 	}
 	if message.ID == 0 {
 		return &repr.AppError{
-			Code: errorcode.EventDeleteError,
+			Code: errorcode.MessageDeleteError,
 			Message: fmt.Sprintf("Message(id=%d) not found in Group(id=%d)", rl.MessageID, rl.GroupID)}
 	}
 	return nil
