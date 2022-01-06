@@ -24,7 +24,7 @@ func ListUser(context *gin.Context) {
 	}
 	paginator := util.Paginator{Page: userRetrieve.Page, PageSize: userRetrieve.PageSize}
 	if users, err := service.ListUser(&userRetrieve, &paginator); err == nil {
-		context.JSON(http.StatusCreated, &rep.Response{
+		context.JSON(http.StatusOK, &rep.Response{
 			Data: gin.H{
 				"page": paginator.Page,
 				"page_size": paginator.PageSize,
@@ -96,7 +96,6 @@ func UpdateUser(context *gin.Context) {
 func AuthUser(context *gin.Context) {
 	var userAuth service.UserAuth
 	if context.ShouldBindQuery(&userAuth) == nil {
-		panic("test")
 		user, err := service.AuthUser(userAuth.OpenID)
 		if err == nil {
 			context.JSON(http.StatusCreated, &rep.Response{
