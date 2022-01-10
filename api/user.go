@@ -96,6 +96,7 @@ func UpdateUser(context *gin.Context) {
 func AuthUser(context *gin.Context) {
 	var userAuth service.UserAuth
 	if context.ShouldBindQuery(&userAuth) == nil {
+		panic("test")
 		user, err := service.AuthUser(userAuth.OpenID)
 		if err == nil {
 			context.JSON(http.StatusCreated, &rep.Response{

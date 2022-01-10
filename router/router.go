@@ -9,7 +9,7 @@ import (
 func NewRouter() *gin.Engine {
 	router := gin.New()
 
-	router.Use(middleware.Recovery(), middleware.HttpLogger())
+	router.Use(middleware.TlsHandler(8080), middleware.Recovery(), middleware.HttpLogger())
 
 	// user related
 	router.GET("/test/", api.Test)

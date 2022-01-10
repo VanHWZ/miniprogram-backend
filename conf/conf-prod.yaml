@@ -1,0 +1,12 @@
+database:
+  host: "postgresql"
+  user: "root"
+  password: "990130"
+  dbname: "eventbackend"
+  port: 5432
+  sslmode: "disable"
+  timezone: "Asia/Shanghai"
+logger:
+  basedir: "log"
+  httplog: "http.log"
+  errorlog: "error.log"
